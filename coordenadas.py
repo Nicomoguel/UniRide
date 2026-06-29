@@ -275,6 +275,7 @@ class CoordinatePicker:
             selectbackground=ACCENT, selectforeground=BG,
             yscrollcommand=sb.set, borderwidth=0, highlightthickness=0,
             activestyle="none", exportselection=False,
+            selectmode=tk.EXTENDED,
         )
         self.listbox.pack(fill="both", expand=True, padx=2, pady=2)
         sb.config(command=self.listbox.yview)
@@ -328,11 +329,11 @@ class CoordinatePicker:
         sf = self.scale_var.get()
         ox_s, oy_s = int(x * sf), int(y * sf)
         self.origin_display.config(
-            text=f"Pantalla ({x}, {y})  →  escalado ({ox_s}, {oy_s})",
+            text=f"Pantalla {self._format_coord(x, y)}  →  escalado {self._format_coord(ox_s, oy_s)}",
             fg=SUCCESS,
         )
         self._set_status(
-            f"✓ Origen fijado en pantalla ({x}, {y}). Capturas ahora relativas."
+            f"✓ Origen fijado en pantalla {self._format_coord(x, y)}. Capturas ahora relativas."
         )
 
     def _clear_origin(self):
@@ -366,7 +367,7 @@ class CoordinatePicker:
             ox, oy = self._to_output(x, y)
             self.live_abs.config(text=f"X: {ox}   Y: {oy}")
             if self.origin_x is not None:
-                self.live_rel.config(text=f"Relativo al origen: ({ox}, {oy})")
+                self.live_rel.config(text=f"Relativo al origen: {ox} {oy}")
             else:
                 self.live_rel.config(text="Relativo al origen: —")
         except tk.TclError:
@@ -430,7 +431,7 @@ class CoordinatePicker:
 
     def _add_capture(self, x, y, source):
         rx, ry = self._to_output(x, y)
-        entry = f"({rx}, {ry})"
+        entry = self._format_coord(rx, ry)
         self.listbox.insert(0, entry)
         self.listbox.selection_clear(0, tk.END)
         self.listbox.selection_set(0)
@@ -439,6 +440,9 @@ class CoordinatePicker:
         self._set_status(f"Capturado {entry} con {source} — copiado al portapapeles")
 
     # ── Utilidades ────────────────────────────────────────────────────────────
+
+    def _format_coord(self, x, y):
+        return f"{x} {y}"
 
     def _set_clipboard(self, text):
         self.root.clipboard_clear()
@@ -455,9 +459,12 @@ class CoordinatePicker:
             else:
                 self._set_status("No hay coordenadas para copiar")
                 return
-        text = self.listbox.get(sel[0])
+        text = "\n".join(self.listbox.get(i) for i in sel)
         self._set_clipboard(text)
-        self._set_status(f"Copiado: {text}")
+        if len(sel) == 1:
+            self._set_status(f"Copiado: {text}")
+        else:
+            self._set_status(f"Copiadas {len(sel)} coordenadas")
 
     def clear_list(self):
         self.listbox.delete(0, tk.END)

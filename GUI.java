@@ -18,9 +18,9 @@ public class GUI extends JPanel{
     private Node nodeA = new Node("A", 280, 13);
     private Node nodeB = new Node("B", 325, 30);
     private Node nodeC = new Node("C", 373, 49);
-    private Node nodeD = new Node("D", 500, 200);
-    private Node nodeE = new Node("E", 350, 450);
-    private Node nodeF = new Node("F", 300, 250);
+    //private Node nodeD = new Node("D", 500, 200);
+    //private Node nodeE = new Node("E", 350, 450);
+    //private Node nodeF = new Node("F", 300, 250);
     private Node nodeG = new Node("G", 417, 66);
     private Node nodeH = new Node("H", 433, 68);
     private Node nodeI = new Node("I", 452, 72);
@@ -74,27 +74,36 @@ public class GUI extends JPanel{
     private Node nodeC6 = new Node("C6", 442, 154);
     private Node nodeC7 = new Node("C7", 490, 156);
     private Node nodeC8 = new Node("C8", 539, 158);
+    private Node nodeC9 = new Node("C9", 410, 132);
 
-    private Node[] nodes = {nodeA,nodeB,nodeC,nodeD,nodeE,nodeF,nodeG,nodeH,nodeI,nodeJ,nodeK,
+    private Node nodeD1 = new Node("D1", 198, 87);
+    private Node nodeD2 = new Node("D2", 247, 105);
+    private Node nodeD3 = new Node("D3", 294, 121);
+    private Node nodeD4 = new Node("D4", 340, 141);
+    private Node nodeD5 = new Node("D5", 418, 171);
+    private Node nodeD6 = new Node("D6", 441, 170);
+    private Node nodeD7 = new Node("D7", 486, 172);
+    private Node nodeD8 = new Node("D8", 538, 175);
+    private Node nodeD9 = new Node("D9", 682, 228);
+    private Node nodeD10 = new Node("D10", 1172, 400);
+
+    
+
+
+//    private Node nodeD1 = new
+
+    private Node[] nodes = {nodeA,nodeB,nodeC,nodeG,nodeH,nodeI,nodeJ,nodeK,
         nodeL,nodeM,nodeN,nodeO,nodeP,nodeQ,nodeR,nodeS,nodeT,nodeU,nodeV,
         nodeW,nodeX,nodeY,nodeZ,nodeA1,
         nodeA2,nodeA3,nodeA4,nodeA5,nodeA6,nodeA7,nodeA8,
         nodeA9,nodeB1,nodeB2,nodeB3,nodeB4,nodeB5,nodeB6,nodeB7,nodeB8,nodeB9,
-        nodeC1,nodeC2,nodeC3,nodeC4,nodeC5,nodeC6,nodeC7,nodeC8
+        nodeC1,nodeC2,nodeC3,nodeC4,nodeC5,nodeC6,nodeC7,nodeC8, nodeC9, nodeD1, nodeD2, nodeD3, nodeD4, nodeD5, nodeD6, nodeD7, nodeD8, nodeD9, nodeD10
     };
-    Graph graph = new Graph();
+    Graph graph = new Graph(nodes);
 
 
     public GUI(){
-        nodeA.addDestination(nodeB, 10);
-        nodeA.addDestination(nodeC, 15);
-        nodeB.addDestination(nodeD, 12);
-        nodeB.addDestination(nodeF, 15);
-        nodeC.addDestination(nodeE, 10);
-        nodeD.addDestination(nodeE, 2);
-        nodeD.addDestination(nodeF, 1);
-        nodeF.addDestination(nodeE, 5);
-
+/*
         graph.addNode(nodeA);
         graph.addNode(nodeB);
         graph.addNode(nodeC);
@@ -152,6 +161,7 @@ public class GUI extends JPanel{
         graph.addNode(nodeC6); 
         graph.addNode(nodeC7); 
         graph.addNode(nodeC8); 
+        */
 
         graph = Dijkstra.shortestPath(graph, nodeA);
         try{
@@ -182,7 +192,7 @@ public class GUI extends JPanel{
     public Dimension getPreferredSize() {
         return new Dimension(566,698);
     }
-
+/*
     private void paintShortestPath(Graphics g){
         Node test = nodeF;
         List<Node> nodes = test.getShortestPath();
@@ -199,12 +209,12 @@ public class GUI extends JPanel{
         }
     }
 
-   
+  */ 
 
     protected void paintComponent(Graphics g){
         g.drawImage(map, 0, 0, this);
         paintNodes(g);
        // paintLinks(g);
-        paintShortestPath(g);
+       // paintShortestPath(g);
     }
 }
