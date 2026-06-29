@@ -432,10 +432,10 @@ class CoordinatePicker:
     def _add_capture(self, x, y, source):
         rx, ry = self._to_output(x, y)
         entry = self._format_coord(rx, ry)
-        self.listbox.insert(0, entry)
+        self.listbox.insert(tk.END, entry)
         self.listbox.selection_clear(0, tk.END)
-        self.listbox.selection_set(0)
-        self.listbox.see(0)
+        self.listbox.selection_set(tk.END)
+        self.listbox.see(tk.END)
         self._set_clipboard(entry)
         self._set_status(f"Capturado {entry} con {source} — copiado al portapapeles")
 

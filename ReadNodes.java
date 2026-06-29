@@ -8,15 +8,20 @@ public class ReadNodes{
     public static Graph readDoc(Graph graph, String name){
         try{
             Path path = FileSystems.getDefault().getPath(name);
-            eredReader br = Files.newBufferedReader(path);
+            BufferedReader br = Files.newBufferedReader(path);
             String linea;
+            int i = 0;
             while((linea = br.readLine()) != null){
+                i++;
                 int split = linea.indexOf(" ");
                 String s1 = linea.substring(0, split);
                 String s2 = linea.substring(split + 1, linea.length());
                 int x = Integer.parseInt(s1);
                 int y = Integer.parseInt(s2);
-                System.out.println(s1 + " " + s2);
+                //System.out.println(s1 + " " + s2);
+                String nameNode = String.valueOf(i);
+                Node newNode = new Node(nameNode, x, y);
+                graph.addNode(newNode);
             }
             br.close();
         }

@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 public class GUI extends JPanel{
 
     private BufferedImage map;
+    /*
     private Node nodeA = new Node("A", 280, 13);
     private Node nodeB = new Node("B", 325, 30);
     private Node nodeC = new Node("C", 373, 49);
@@ -87,11 +88,11 @@ public class GUI extends JPanel{
     private Node nodeD9 = new Node("D9", 682, 228);
     private Node nodeD10 = new Node("D10", 1172, 400);
 
-    
+    */
 
 
 //    private Node nodeD1 = new
-
+/*
     private Node[] nodes = {nodeA,nodeB,nodeC,nodeG,nodeH,nodeI,nodeJ,nodeK,
         nodeL,nodeM,nodeN,nodeO,nodeP,nodeQ,nodeR,nodeS,nodeT,nodeU,nodeV,
         nodeW,nodeX,nodeY,nodeZ,nodeA1,
@@ -99,10 +100,12 @@ public class GUI extends JPanel{
         nodeA9,nodeB1,nodeB2,nodeB3,nodeB4,nodeB5,nodeB6,nodeB7,nodeB8,nodeB9,
         nodeC1,nodeC2,nodeC3,nodeC4,nodeC5,nodeC6,nodeC7,nodeC8, nodeC9, nodeD1, nodeD2, nodeD3, nodeD4, nodeD5, nodeD6, nodeD7, nodeD8, nodeD9, nodeD10
     };
-    Graph graph = new Graph(nodes);
-
+    */
+    private Graph graph = new Graph();
+    
 
     public GUI(){
+        ReadNodes.readDoc(graph, "coordenadas.txt");
 /*
         graph.addNode(nodeA);
         graph.addNode(nodeB);
@@ -163,7 +166,7 @@ public class GUI extends JPanel{
         graph.addNode(nodeC8); 
         */
 
-        graph = Dijkstra.shortestPath(graph, nodeA);
+        //graph = Dijkstra.shortestPath(graph, nodeA);
         try{
             map = ImageIO.read(new File("Map2.jpeg"));
         }
@@ -174,11 +177,17 @@ public class GUI extends JPanel{
     private void paintNodes(Graphics g){
 
         //g.drawOval(nodeA.getX(), nodeA.getY(), 10, 10);
-    
+        List<Node> vertices = graph.getVertices();
+        for(Node node : vertices){
+            g.drawOval(node.getX(), node.getY(), 10, 10);
+        }
+/*
         for(int i = 0; i < nodes.length; i++){
             g.drawOval(nodes[i].getX(), nodes[i].getY(), 10, 10);
         }
+        */
     }
+    /*
     private void paintLinks(Graphics g){
         for(int i = 0; i < nodes.length; i++){
             Map<Node, Integer> adjacents = nodes[i].getAdjacentNodes();
@@ -188,6 +197,7 @@ public class GUI extends JPanel{
             }
         }
     }
+    */
 
     public Dimension getPreferredSize() {
         return new Dimension(566,698);
