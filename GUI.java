@@ -15,32 +15,39 @@ import javax.imageio.ImageIO;
 public class GUI extends JPanel{
 
     private BufferedImage map;
-    private Node nodeA = new Node("A", 280, 13);
-    private Node nodeB = new Node("B", 325, 30);
-    private Node nodeC = new Node("C", 373, 49);
-    private Node nodeD = new Node("D", 500, 200);
-    private Node nodeE = new Node("E", 350, 450);
-    private Node nodeF = new Node("F", 300, 250);
-    private Node[] nodes = {nodeA,nodeB,nodeC,nodeD,nodeE,nodeF};
+    private Node node1 = new Node("1", 280, 13);
+    private Node node2 = new Node("2", 325, 30);
+    private Node node3 = new Node("3", 373, 49);
+    private Node node4 = new Node("4", 432, 67);
+    private Node node5 = new Node("5", 489, 74);
+    private Node node6 = new Node("6", 538, 73);
+    private Node node7 = new Node("7", 228, 12);
+    private Node node8 = new Node("8", 274, 30);
+    private Node node9 = new Node("9", 320, 49);
+    private Node node10 = new Node("10", 365, 68);
+    private Node node11 = new Node("11", 406, 84);
+    private Node[] nodes = {node1,node2,node3,node4,node5,node6, node7, node8, node9, node10, node11};
     Graph graph = new Graph();
 
 
     public GUI(){
-        nodeA.addDestination(nodeB, 10);
-        nodeA.addDestination(nodeC, 15);
-        nodeB.addDestination(nodeD, 12);
-        nodeB.addDestination(nodeF, 15);
-        nodeC.addDestination(nodeE, 10);
-        nodeD.addDestination(nodeE, 2);
-        nodeD.addDestination(nodeF, 1);
-        nodeF.addDestination(nodeE, 5);
-        graph.addNode(nodeA);
-        graph.addNode(nodeB);
-        graph.addNode(nodeC);
-        graph.addNode(nodeD);
-        graph.addNode(nodeE);
-        graph.addNode(nodeF);
-        graph = Dijkstra.shortestPath(graph, nodeA);
+        /*
+        node1.addDestination(node2, 10);
+        node1.addDestination(node3, 15);
+        node2.addDestination(node4, 12);
+        node2.addDestination(node6, 15);
+        node3.addDestination(node5, 10);
+        node4.addDestination(node5, 2);
+        node4.addDestination(node6, 1);
+        node6.addDestination(node5, 5);
+        */
+        graph.addNode(node1);
+        graph.addNode(node2);
+        graph.addNode(node3);
+        graph.addNode(node4);
+        graph.addNode(node5);
+        graph.addNode(node6);
+        graph = Dijkstra.shortestPath(graph, node1);
         try{
             map = ImageIO.read(new File("Map2.jpeg"));
         }
@@ -50,7 +57,7 @@ public class GUI extends JPanel{
     }
     private void paintNodes(Graphics g){
 
-        //g.drawOval(nodeA.getX(), nodeA.getY(), 10, 10);
+        //g.drawOval(node1.getX(), nodeA.getY(), 10, 10);
         //
         for(int i = 0; i < nodes.length; i++){
             g.drawOval(nodes[i].getX(), nodes[i].getY(), 10, 10);
@@ -67,7 +74,7 @@ public class GUI extends JPanel{
     }
 
     private void paintShortestPath(Graphics g){
-        Node test = nodeF;
+        Node test = node6;
         List<Node> nodes = test.getShortestPath();
         for(int i = 0; i < nodes.size(); i++){
             if(i > 0){
@@ -88,6 +95,6 @@ public class GUI extends JPanel{
         g.drawImage(map, 0, 0, this);
         paintNodes(g);
        // paintLinks(g);
-        paintShortestPath(g);
+       // paintShortestPath(g);
     }
 }
