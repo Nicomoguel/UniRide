@@ -1,7 +1,7 @@
 import java.util.*;
 public class Graph{
     private Set<Node> nodes = new HashSet<Node>();
-    private List<Node> vertices = new LinkedList<Node>(); 
+    private LinkedList<Node> vertices = new LinkedList<Node>(); 
 
     /*  
     public Graph(Node[] nodes){
@@ -16,7 +16,7 @@ public class Graph{
         vertices.add(node);
     }
     //getters and setters
-    public List<Node> getVertices(){
+    public LinkedList<Node> getVertices(){
         return vertices;
     }
 
