@@ -17,7 +17,7 @@ public class AddAllAdjacents{
         }
         nodes[7].removeDestination(nodes[7], nodes[8]);
         nodes[18].removeDestination(nodes[18], nodes[19]);
-        nodes[26].remno
+        nodes[26].removeDestination(nodes[26], nodes[27]);
 
             /*
         nodes[0].addDestination(nodes[1], 2);
