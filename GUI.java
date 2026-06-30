@@ -19,6 +19,7 @@ public class GUI extends JPanel{
     public GUI(){
         ReadNodes.readDoc(graph, "coordenadas.txt");
         AddAllAdjacents.add(graph);
+        ReadRemoveAdjacents.removeAdjacents(graph, "RemoveNodes.txt");
         try{
             map = ImageIO.read(new File("Map2.jpeg"));
         }
