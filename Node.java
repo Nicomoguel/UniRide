@@ -5,9 +5,23 @@ public class Node{
     private Map<Node, Integer> adjacentNodes = new HashMap<Node, Integer>();
     private List<Node> shortestPath  = new LinkedList<>();
     private int coordX, coordY;
+
+
     public void addDestination(Node destination, int distance){
         adjacentNodes.put(destination, distance);
+        
     }
+
+    public void removeDestination(Node source, Node other){
+        adjacentNodes.remove(other);
+        other.removeDestination(source);
+    }
+
+    public void removeDestination(Node other){
+        adjacentNodes.remove(other);
+    }
+
+
     public Node(String name, int coordX, int coordY){
         this.name = name;
         this.coordX = coordX;
