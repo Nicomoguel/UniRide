@@ -7,9 +7,13 @@ public class Node{
     private int coordX, coordY;
 
 
+    public void addDestination(Node source, Node destination, int distance){
+        adjacentNodes.put(destination, distance);
+        destination.addDestination(source, distance);
+    }
+
     public void addDestination(Node destination, int distance){
         adjacentNodes.put(destination, distance);
-        
     }
 
     public void removeDestination(Node source, Node other){

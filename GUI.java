@@ -16,10 +16,16 @@ public class GUI extends JPanel{
 
     private BufferedImage map;
     private Graph graph = new Graph();
+    private List<Node> listNodes;
+    private Node[] nodes;
     public GUI(){
         ReadNodes.readDoc(graph, "coordenadas.txt");
         AddAllAdjacents.add(graph);
+        ReadAddColumns.addCols(graph, "columnas.txt");
         ReadRemoveAdjacents.removeAdjacents(graph, "RemoveNodes.txt");
+        this.listNodes = graph.getVertices();
+        this.nodes = this.listNodes.toArray(new Node[0]);
+        Dijkstra.shortestPath(graph, nodes[0]);
         try{
             map = ImageIO.read(new File("Map2.jpeg"));
         }
@@ -35,16 +41,6 @@ public class GUI extends JPanel{
     }
     
     private void paintLinks(Graphics g){
-
-        /*
-        for(int i = 0; i < nodes.length; i++){
-            Map<Node, Integer> adjacents = nodes[i].getAdjacentNodes();
-            for(Map.Entry<Node, Integer> entry : adjacents.entrySet()){
-                Node adjacent = entry.getKey();
-                g.drawLine(nodes[i].getX(), nodes[i].getY(), adjacent.getX(), adjacent.getY());
-            }
-        }
-        */
         List<Node> vertices = graph.getVertices();
         for(Node node : vertices){
             Map<Node, Integer> adjacents = node.getAdjacentNodes();
@@ -60,9 +56,9 @@ public class GUI extends JPanel{
     public Dimension getPreferredSize() {
         return new Dimension(566,698);
     }
-/*
+
     private void paintShortestPath(Graphics g){
-        Node test = nodeF;
+        Node test = this.nodes[this.nodes.length-1];
         List<Node> nodes = test.getShortestPath();
         for(int i = 0; i < nodes.size(); i++){
             if(i > 0){
@@ -77,12 +73,12 @@ public class GUI extends JPanel{
         }
     }
 
-  */ 
+   
 
     protected void paintComponent(Graphics g){
         g.drawImage(map, 0, 0, this);
         paintNodes(g);
-        paintLinks(g);
-       // paintShortestPath(g);
+        //paintLinks(g);
+        paintShortestPath(g);
     }
 }
