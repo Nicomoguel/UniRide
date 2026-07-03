@@ -59,13 +59,19 @@ public class LoginPage implements ActionListener{
                 if(loginInfo.get(userID).equals(userPassword)){
                     messageLabel.setForeground(Color.green);
                     messageLabel.setText("Login successful");
-                    WelcomePage welcomePage = new WelcomePage();
+                    frame.dispose();
+                    WelcomePage welcomePage = new WelcomePage(userID);
                 }
                 else{
                     messageLabel.setForeground(Color.red);
                     messageLabel.setText("Wrong password");
                 
                 }
+            }
+            else{
+                messageLabel.setForeground(Color.red);
+                messageLabel.setText("User not found");
+        
             }
         }
     }
