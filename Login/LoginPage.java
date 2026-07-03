@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.util.HashMap;
 import javax.swing.*;
+import java.util.ArrayList;
 public class LoginPage implements ActionListener{
 
     JFrame frame = new JFrame();
@@ -15,6 +16,11 @@ public class LoginPage implements ActionListener{
     JLabel userPasswordLabel = new JLabel("password:");
     JLabel messageLabel = new JLabel("");
     HashMap<String, String> loginInfo = new HashMap<String, String>();
+    DatabaseManager dManager = new DatabaseManager();
+    ArrayList<User> users = dManager.loadUsers();
+
+    
+    
     
     public LoginPage(HashMap<String, String> loginInfo){
         this.loginInfo = loginInfo;
@@ -55,6 +61,31 @@ public class LoginPage implements ActionListener{
         if(e.getSource()==loginButton){
             String userID = userIDField.getText();
             String userPassword = String.valueOf(userPasswordField.getPassword());
+            boolean enc = false;
+            for(User u : users){
+                if(u.getStudentId().equals(userID)){
+                    if(u.getPassword().equals(userPassword)){
+                        enc = true;
+                        messageLabel.setForeground(Color.green);
+                        messageLabel.setText("Login successful");
+                        frame.dispose();
+                        WelcomePage welcomePage = new WelcomePage(userID);
+                    }
+                    else{
+                        enc = true;
+                        messageLabel.setForeground(Color.red);
+                        messageLabel.setText("Wrong password");
+                        break;
+                    }
+                }
+            }
+            if(!enc){
+                messageLabel.setForeground(Color.red);
+                messageLabel.setText("User not found");
+            }
+
+
+/*
             if(loginInfo.containsKey(userID)){
                 if(loginInfo.get(userID).equals(userPassword)){
                     messageLabel.setForeground(Color.green);
@@ -73,6 +104,7 @@ public class LoginPage implements ActionListener{
                 messageLabel.setText("User not found");
         
             }
+            */
         }
     }
 }

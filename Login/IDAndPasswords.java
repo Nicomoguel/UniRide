@@ -7,7 +7,7 @@ public class IDAndPasswords{
         loginData.put("tilin", "67");
     }
 
-    protected HashMap getLoginInfo(){
+    protected HashMap<String, String> getLoginInfo(){
         return loginData;
     }
 }
