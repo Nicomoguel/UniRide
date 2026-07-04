@@ -14,7 +14,9 @@ public class DatabaseManager {
     public void saveUsers(ArrayList<User> users) {
         try(BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING)) {
             for(User u : users) {
-                writer.write(u.getClass().getSimpleName() + "|" + u.getStudentId() + "|" + u.getPassword() + "|" + u.getIDMEX() + "|" + u.getAge() + "|" + u.getTolerance() + "|" + u.getUserPoints() + "|" + (u instanceof Driver ? ((Driver) u).isLicenseValid() : "false"));            
+                Node source = u.getSource();
+                Node destination = u.getDestination();
+                writer.write(u.getClass().getSimpleName() + "|" + u.getStudentId() + "|" + u.getPassword() + "|" + u.getIDMEX() + "|" + u.getAge() + "|" + u.getTolerance() + "|" + u.getUserPoints() + "|" + (u instanceof Driver ? ((Driver) u).isLicenseValid() : "false") + "|" + source.getX() + "|" + source.getY() + "|" + destination.getX() + "|" + destination.getY()); // + u.getSource() + u.getDestination()             
                 writer.newLine();
             }
         }
@@ -45,8 +47,12 @@ public class DatabaseManager {
                     short tolerance = Short.parseShort(data[5]);
                     int points = Integer.parseInt(data[6]);
                     boolean license = Boolean.parseBoolean(data[7]);
-
-                    Driver driver = new Driver(id, pass, idmex, age, tolerance, license);
+                    // leemos ambos x,y
+                    int x1 = Integer.parseInt(data[8]);
+                    int y1 = Integer.parseInt(data[9]);
+                    int x2 = Integer.parseInt(data[10]);
+                    int y2 = Integer.parseInt(data[11]);
+                    Driver driver = new Driver(id, pass, idmex, age, tolerance, license, new Node("src", x1, y1), new Node("dest", x2, y2));
                     driver.addReliabilityPoints(points);
                     loadedUsers.add(driver);
 
@@ -57,8 +63,11 @@ public class DatabaseManager {
                     short age = Short.parseShort(data[4]);
                     short tolerance = Short.parseShort(data[5]);
                     int points = Integer.parseInt(data[6]);
-
-                    Passenger passenger = new Passenger(id, pass, idmex, age, tolerance);
+                    int x1 = Integer.parseInt(data[7]);
+                    int y1 = Integer.parseInt(data[8]);
+                    int x2 = Integer.parseInt(data[9]);
+                    int y2 = Integer.parseInt(data[10]);
+                    Passenger passenger = new Passenger(id, pass, idmex, age, tolerance, new Node("src", x1, y1), new Node("dest", x2, y2));
                     passenger.addReliabilityPoints(points);
                     loadedUsers.add(passenger);
                 }

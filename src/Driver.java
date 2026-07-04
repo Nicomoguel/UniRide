@@ -1,8 +1,10 @@
+import java.util.LinkedList;
+import java.util.List;
 public class Driver extends User {
     private boolean license;
-
-    public Driver(String studentId, String password, String IDMEX, short age, short tolerance, boolean license) {
-        super(studentId, password, IDMEX, age, tolerance);
+    private List<Node> route = new LinkedList<>();
+    public Driver(String studentId, String password, String IDMEX, short age, short tolerance, boolean license, Node source, Node destination) { // Node source, Node destination
+        super(studentId, password, IDMEX, age, tolerance, source, destination);
         this.license = license;
     }
 
@@ -12,6 +14,16 @@ public class Driver extends User {
 
     public void setLicense(boolean license) {
         this.license = license;
+    }
+
+    public void setRoute(Graph graph){
+        
+        Dijkstra.shortestPath(graph, this.source);
+        this.route = this.destination.getShortestPath();
+    }
+
+    public List<Node> getRoute(){
+        return this.route;
     }
 
     @Override

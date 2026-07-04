@@ -5,13 +5,17 @@ public abstract class User {
     protected String IDMEX;
     protected short age;
     protected int userPoints;
+    protected Node source;
+    protected Node destination;
 
-    public User(String studentId, String password, String IDMEX, short age, short tolerance) {
+    public User(String studentId, String password, String IDMEX, short age, short tolerance, Node source, Node destination) { // Node source, Node destination
         this.studentId = studentId;
         this.password = password;
         this.IDMEX = IDMEX;
         this.age = age;
         this.tolerance = tolerance;
+        this.source = source;
+        this.destination = destination;
         userPoints = 0;
     }
 
@@ -37,6 +41,14 @@ public abstract class User {
 
     public int getUserPoints() {
         return userPoints;
+    }
+
+    public Node getSource(){
+        return source;
+    }
+    
+    public Node getDestination(){
+        return destination;
     }
 
     public void setPassword(String password) {
