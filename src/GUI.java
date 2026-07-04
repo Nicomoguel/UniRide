@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.util.*;
@@ -11,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 public class GUI extends JPanel{
 
@@ -18,7 +20,16 @@ public class GUI extends JPanel{
     private Graph graph = new Graph();
     private List<Node> listNodes;
     private Node[] nodes;
-    public GUI(User user){
+    private User user;
+    private JLabel userIdLabel = new JLabel("");
+    private JLabel userToleranceLabel = new JLabel("");
+    private JLabel userIDMEXLabel = new JLabel("");
+    private JLabel userPoints = new JLabel("");
+    private JFrame frame = new JFrame();
+    public GUI(User user, JFrame frame){
+        this.user = user;
+        this.frame = frame;
+        userPanel();
         ReadNodes.readDoc(graph, "coordenadas.txt");
         AddAllAdjacents.add(graph);
         ReadAddColumns.addCols(graph, "columnas.txt");
@@ -33,6 +44,24 @@ public class GUI extends JPanel{
             System.out.println("No se pudo leer la imagen");
         }
     }
+
+    private void userPanel(){
+        String tolerance = Short.toString(user.getTolerance()); 
+        String points = String.valueOf(user.getUserPoints());
+        userIdLabel.setBounds(600, 20, 100, 25);
+        userToleranceLabel.setBounds(600, 50, 100, 25);
+        userIDMEXLabel.setBounds(600, 80, 100, 25);
+        userPoints.setBounds(600, 110, 100, 25);
+        userIdLabel.setText("ID: "+user.getStudentId());
+        userToleranceLabel.setText("Tolerance: "+tolerance);
+        userIDMEXLabel.setText("IDMEX: "+user.getIDMEX());
+        userPoints.setText("User points: " + points);
+        frame.add(userIdLabel);
+        frame.add(userToleranceLabel);
+        frame.add(userPoints);
+        frame.add(userIDMEXLabel);
+    }
+
     private void paintNodes(Graphics g){
         List<Node> vertices = graph.getVertices();
         for(Node node : vertices){
@@ -54,7 +83,7 @@ public class GUI extends JPanel{
     
 
     public Dimension getPreferredSize() {
-        return new Dimension(566,698);
+        return new Dimension(800,700);
     }
 
     private void paintShortestPath(Graphics g){
