@@ -27,6 +27,7 @@ public class GUI extends JPanel{
     private JLabel userPoints = new JLabel("");
     private JFrame frame = new JFrame();
     public GUI(User user, JFrame frame){
+        
         this.user = user;
         this.frame = frame;
         userPanel();
@@ -36,13 +37,14 @@ public class GUI extends JPanel{
         ReadRemoveAdjacents.removeAdjacents(graph, "RemoveNodes.txt");
         this.listNodes = graph.getVertices();
         this.nodes = this.listNodes.toArray(new Node[0]);
-        Dijkstra.shortestPath(graph, nodes[0]);
         try{
             map = ImageIO.read(new File("Map2.jpeg"));
         }
         catch(IOException ex){
             System.out.println("No se pudo leer la imagen");
         }
+
+        Dijkstra.shortestPath(graph, user.getSource());
     }
 
     private void userPanel(){
@@ -87,19 +89,51 @@ public class GUI extends JPanel{
     }
 
     private void paintShortestPath(Graphics g){
-        Node test = this.nodes[this.nodes.length-1];
-        List<Node> nodes = test.getShortestPath();
-        for(int i = 0; i < nodes.size(); i++){
+
+        Node source = this.user.getSource();
+        Node destination = this.user.getDestination();
+        for(int i = 0; i < nodes.length; i++){
+            if(source.getX() == nodes[i].getX() && source.getY() == nodes[i].getY()){
+                source = nodes[i];
+            }
+            if(destination.getX() == nodes[i].getX() && destination.getY() == nodes[i].getY()){
+                destination = nodes[i];
+            }
+
+        }
+        List<Node> route = destination.getShortestPath();
+
+        for(int i = 0; i < route.size(); i++){
             if(i > 0){
-                Node prevNode = nodes.get(i-1);
-                Node actNode = nodes.get(i);
+                Node prevNode = route.get(i-1);
+                Node actNode = route.get(i);
                 g.drawLine(prevNode.getX(), prevNode.getY(), actNode.getX(), actNode.getY());
             }
-            if(i == (nodes.size() - 1)){
-                Node actNode = nodes.get(i);
-                g.drawLine(actNode.getX(), actNode.getY(), test.getX(), test.getY());
+            if(i == (route.size() - 1)){
+                Node actNode = route.get(i);
+                g.drawLine(actNode.getX(), actNode.getY(), destination.getX(), destination.getY());
             }
         }
+
+
+/*
+        if(!user.whichUser()){
+            Node test = this.nodes[this.nodes.length-1];
+            List<Node> nodes = test.getShortestPath();
+            for(int i = 0; i < nodes.size(); i++){
+                if(i > 0){
+                    Node prevNode = nodes.get(i-1);
+                    Node actNode = nodes.get(i);
+                    g.drawLine(prevNode.getX(), prevNode.getY(), actNode.getX(), actNode.getY());
+                }
+                if(i == (nodes.size() - 1)){
+                    Node actNode = nodes.get(i);
+                    g.drawLine(actNode.getX(), actNode.getY(), test.getX(), test.getY());
+                }
+            }
+
+        }
+        */
     }
 
    

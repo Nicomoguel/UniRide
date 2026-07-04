@@ -63,10 +63,10 @@ public class DatabaseManager {
                     short age = Short.parseShort(data[4]);
                     short tolerance = Short.parseShort(data[5]);
                     int points = Integer.parseInt(data[6]);
-                    int x1 = Integer.parseInt(data[7]);
-                    int y1 = Integer.parseInt(data[8]);
-                    int x2 = Integer.parseInt(data[9]);
-                    int y2 = Integer.parseInt(data[10]);
+                    int x1 = Integer.parseInt(data[8]);
+                    int y1 = Integer.parseInt(data[9]);
+                    int x2 = Integer.parseInt(data[10]);
+                    int y2 = Integer.parseInt(data[11]);
                     Passenger passenger = new Passenger(id, pass, idmex, age, tolerance, new Node("src", x1, y1), new Node("dest", x2, y2));
                     passenger.addReliabilityPoints(points);
                     loadedUsers.add(passenger);

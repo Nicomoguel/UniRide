@@ -16,8 +16,7 @@ public class Driver extends User {
         this.license = license;
     }
 
-    public void setRoute(Graph graph){
-        
+    public void setRoute(Graph graph){ 
         Dijkstra.shortestPath(graph, this.source);
         this.route = this.destination.getShortestPath();
     }
