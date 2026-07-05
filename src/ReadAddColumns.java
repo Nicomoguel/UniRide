@@ -44,7 +44,7 @@ public class ReadAddColumns{
                 }
                 */
 
-                nodes[index1].addDestination(nodes[index2], 1);
+                nodes[index1].addDestination(nodes[index1], nodes[index2], 1);
                 linea = linea1;
             }
             br.close();

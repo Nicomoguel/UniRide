@@ -68,7 +68,7 @@ public abstract class User {
     }
 
     public boolean login(String studentId, String password) {
-        return this.studentId == studentId && this.password == password;
+        return this.studentId.equals(studentId) && this.password.equals(password);
     }
 
     public int addReliabilityPoints(int points) {

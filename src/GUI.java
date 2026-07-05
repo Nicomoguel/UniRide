@@ -41,10 +41,10 @@ public class GUI extends JPanel{
             map = ImageIO.read(new File("Map2.jpeg"));
         }
         catch(IOException ex){
-            System.out.println("No se pudo leer la imagen");
+            System.out.println("Couldn't read the image");
         }
 
-        Dijkstra.shortestPath(graph, user.getSource());
+
     }
 
     private void userPanel(){
@@ -101,6 +101,8 @@ public class GUI extends JPanel{
             }
 
         }
+
+        Dijkstra.shortestPath(graph, source);
         List<Node> route = destination.getShortestPath();
 
         for(int i = 0; i < route.size(); i++){
@@ -114,6 +116,9 @@ public class GUI extends JPanel{
                 g.drawLine(actNode.getX(), actNode.getY(), destination.getX(), destination.getY());
             }
         }
+
+        g.fillOval(source.getX() - source.getRadius(), source.getY() - source.getRadius(), 2*source.getRadius(), 2*source.getRadius());
+        g.fillOval(destination.getX() - destination.getRadius(), destination.getY() - destination.getRadius(), 2*destination.getRadius(), 2*destination.getRadius());
 
 
 /*
@@ -137,10 +142,11 @@ public class GUI extends JPanel{
     }
 
    
-
+    @Override
     protected void paintComponent(Graphics g){
+        super.paintComponent(g);
         g.drawImage(map, 0, 0, this);
-        paintNodes(g);
+        //paintNodes(g);
         //paintLinks(g);
         paintShortestPath(g);
     }

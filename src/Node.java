@@ -5,6 +5,7 @@ public class Node{
     private Map<Node, Integer> adjacentNodes = new HashMap<Node, Integer>();
     private List<Node> shortestPath  = new LinkedList<>();
     private int coordX, coordY;
+    private final int radius = 5;
 
 
     public void addDestination(Node source, Node destination, int distance){
@@ -66,6 +67,10 @@ public class Node{
 
     public int getY(){
         return coordY;
+    }
+
+    public int getRadius(){
+        return radius;
     }
 
 }
