@@ -1,2 +1,12 @@
-*.py
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Cachés de Python
+__pycache__/
+*.py[cod]
 *.class
+
+# macOS
+.DS_Store
