@@ -22,8 +22,8 @@ public class PruebaDB {
 
         ArrayList<User> usuariosParaGuardar = new ArrayList<>();
         
-        Driver conductor = new Driver("A001", "pass123", "MEX123", (short)21, (short)2, true, new Node("2", 328, 34), new Node("110", 260, 210));
-        Passenger pasajero = new Passenger("A002", "pass456", "MEX456", (short)19, (short)3, new Node("44", 204, 73), new Node("50", 490, 160));
+        Driver conductor = new Driver("A001", "pass123", "MEX123", (short)21, (short)2, true, new Node("2", 328, 34), new Node("110", 260, 210), new Schedule("10:30", "12:39"));
+        Passenger pasajero = new Passenger("A002", "pass456", "MEX456", (short)19, (short)3, new Node("44", 204, 73), new Node("50", 490, 160), new Schedule("07:39", "11:29"));
         
         usuariosParaGuardar.add(conductor);
         usuariosParaGuardar.add(pasajero);
