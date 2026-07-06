@@ -22,18 +22,20 @@ public class PruebaDB {
 
         ArrayList<User> usuariosParaGuardar = new ArrayList<>();
         
-        Driver conductor = new Driver("A001", "pass123", "MEX123", (short)21, (short)2, true, new Node("2", 328, 34), new Node("110", 260, 210));
-        Passenger pasajero = new Passenger("A002", "pass456", "MEX456", (short)19, (short)3, new Node("44", 204, 73), new Node("50", 490, 160));
+        Driver conductor = new Driver("A001", "pass123", "MEX123", (short)21, (short)2, true, new Node("2", 328, 34), new Node("110", 260, 210), new Schedule("10:30", "12:39"));
+        Passenger pasajero1 = new Passenger("A002", "pass456", "MEX456", (short)19, (short)3, new Node("44", 204, 73), new Node("50", 490, 160), new Schedule("07:39", "11:29"));
+        Passenger pasajero2 = new Passenger("A003", "pass456", "MEX432", (short)22, (short)5, new Node("77", 439, 202), new Node("110", 260, 210), new Schedule("10:00", "2:35"));
         
         usuariosParaGuardar.add(conductor);
-        usuariosParaGuardar.add(pasajero);
+        usuariosParaGuardar.add(pasajero1);
+        usuariosParaGuardar.add(pasajero2);
 
         // Probar el método de Guardado (Serialización)
         System.out.println("Guardando usuarios en el disco duro...");
         dbManager.saveUsers(usuariosParaGuardar);
 
         // Probar el método de Carga (Deserialización)
-        System.out.println("Cargando usuarios desde el archivo txt...");
+            System.out.println("Cargando usuarios desde el archivo txt...");
         ArrayList<User> usuariosCargados = dbManager.loadUsers();
 
         // Imprimir los resultados para verificar que los objetos volvieron a la vida

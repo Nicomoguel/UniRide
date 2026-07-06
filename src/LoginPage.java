@@ -23,11 +23,12 @@ public class LoginPage extends JPanel implements ActionListener{
     private HashMap<String, String> loginInfo = new HashMap<String, String>();
     private DatabaseManager dManager = new DatabaseManager();
     private ArrayList<User> users = dManager.loadUsers();
+    private ArrayList<Passenger> passengers = dManager.getPassengers();
     private Color color = new Color(255,255,255);
     
     
     
-    public LoginPage(HashMap<String, String> loginInfo){
+    public LoginPage(){
         this.loginInfo = loginInfo;
 
         userIDLabel.setBounds(255,285,80,25);
@@ -86,7 +87,7 @@ public class LoginPage extends JPanel implements ActionListener{
                         messageLabel.setForeground(Color.green);
                         messageLabel.setText("Login successful");
                         frame.dispose();
-                        Panel newPanel = new Panel(u);
+                        Panel newPanel = new Panel(u, passengers);
                     }
                     else{
                         enc = true;

@@ -26,9 +26,11 @@ public class GUI extends JPanel{
     private JLabel userIDMEXLabel = new JLabel("");
     private JLabel userPoints = new JLabel("");
     private JFrame frame = new JFrame();
-    public GUI(User user, JFrame frame){
+    private ArrayList<Passenger> passengers;
+    public GUI(User user, ArrayList<Passenger> passengers,JFrame frame){
         this.user = user;
         this.frame = frame;
+        this.passengers = passengers;
         userPanel();
         ReadNodes.readDoc(graph, "coordenadas.txt");
         AddAllAdjacents.add(graph);
@@ -69,11 +71,14 @@ public class GUI extends JPanel{
         frame.add(userIDMEXLabel);
     }
 
-    private void paintNodes(Graphics g){
-        List<Node> vertices = graph.getVertices();
-        for(Node node : vertices){
-            g.drawOval(node.getX(), node.getY(), 10, 10);
+    private void paintPassengers(Graphics g, ArrayList<Passenger> passengers){
+        Color myColor = new Color(37, 161, 74);
+        g.setColor(myColor);
+        for(Passenger passenger : passengers){
+            Node node = passenger.getSource();
+            g.fillOval(node.getX() - node.getRadius(), node.getY() - node.getRadius(), 2*node.getRadius(), 2*node.getRadius());
         }
+        g.setColor(Color.BLACK);
     }
     
     private void paintLinks(Graphics g){
@@ -94,7 +99,6 @@ public class GUI extends JPanel{
     }
 
     private void paintShortestPath(Graphics g){
-
         Node source = this.user.getSource();
         Node destination = this.user.getDestination();
         for(int i = 0; i < nodes.length; i++){
@@ -126,24 +130,6 @@ public class GUI extends JPanel{
         g.fillOval(destination.getX() - destination.getRadius(), destination.getY() - destination.getRadius(), 2*destination.getRadius(), 2*destination.getRadius());
 
 
-/*
-        if(!user.whichUser()){
-            Node test = this.nodes[this.nodes.length-1];
-            List<Node> nodes = test.getShortestPath();
-            for(int i = 0; i < nodes.size(); i++){
-                if(i > 0){
-                    Node prevNode = nodes.get(i-1);
-                    Node actNode = nodes.get(i);
-                    g.drawLine(prevNode.getX(), prevNode.getY(), actNode.getX(), actNode.getY());
-                }
-                if(i == (nodes.size() - 1)){
-                    Node actNode = nodes.get(i);
-                    g.drawLine(actNode.getX(), actNode.getY(), test.getX(), test.getY());
-                }
-            }
-
-        }
-        */
     }
 
    
@@ -152,8 +138,8 @@ public class GUI extends JPanel{
         super.paintComponent(g);
         g.drawImage(map, 0, 0, this);
         g.drawImage(logo, 565, 0, 250, 250, this);
-        //paintNodes(g);
         //paintLinks(g);
         paintShortestPath(g);
+        paintPassengers(g, passengers);
     }
 }

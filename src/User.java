@@ -7,8 +7,9 @@ public abstract class User {
     protected int userPoints;
     protected Node source;
     protected Node destination;
+    protected Schedule schedule;
 
-    public User(String studentId, String password, String IDMEX, short age, short tolerance, Node source, Node destination) { // Node source, Node destination
+    public User(String studentId, String password, String IDMEX, short age, short tolerance, Node source, Node destination, Schedule schedule) { // Node source, Node destination
         this.studentId = studentId;
         this.password = password;
         this.IDMEX = IDMEX;
@@ -16,6 +17,7 @@ public abstract class User {
         this.tolerance = tolerance;
         this.source = source;
         this.destination = destination;
+        this.schedule = schedule;
         userPoints = 0;
     }
 
@@ -49,6 +51,10 @@ public abstract class User {
     
     public Node getDestination(){
         return destination;
+    }
+
+    public Schedule getSchedule(){
+        return schedule;
     }
 
     public void setPassword(String password) {
