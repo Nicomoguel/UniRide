@@ -1,0 +1,42 @@
+import java.util.LinkedList;
+import java.util.List;
+public class Driver extends User {
+    private boolean license;
+    private int desviation;
+    private List<Node> route = new LinkedList<>();
+    public Driver(String studentId, String password, String IDMEX, int desviation, short age, short tolerance, boolean license, Node source, Node destination, Schedule schedule) { // Node source, Node destination
+        super(studentId, password, IDMEX, age, tolerance, source, destination, schedule);
+        this.license = license;
+        this.desviation = desviation;
+    }
+
+    public boolean isLicenseValid() {
+        return license != false;
+    }
+
+    public void setLicense(boolean license) {
+        this.license = license;
+    }
+
+    public int getDesviation() {
+        return desviation;
+    }
+
+
+    public List<Node> getRoute(){
+        return this.route;
+    }
+
+    public void setRoute(List<Node> route){
+        this.route = route;
+    }
+
+    @Override
+    public boolean isUserVerified() {
+        return this.isLicenseValid() && this.IDMEX != null;
+    }
+    @Override
+    public boolean whichUser(){
+        return false;
+    }
+}
