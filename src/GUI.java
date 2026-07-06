@@ -13,10 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-
 public class GUI extends JPanel{
 
     private BufferedImage map;
+    private BufferedImage logo;
     private Graph graph = new Graph();
     private List<Node> listNodes;
     private Node[] nodes;
@@ -27,7 +27,6 @@ public class GUI extends JPanel{
     private JLabel userPoints = new JLabel("");
     private JFrame frame = new JFrame();
     public GUI(User user, JFrame frame){
-        
         this.user = user;
         this.frame = frame;
         userPanel();
@@ -43,6 +42,12 @@ public class GUI extends JPanel{
         catch(IOException ex){
             System.out.println("Couldn't read the image");
         }
+        try{
+            logo = ImageIO.read(new File("icon2.jpeg"));
+        }
+        catch(IOException ex){
+            System.out.println("Couldn't read the image");
+        }
 
 
     }
@@ -50,10 +55,10 @@ public class GUI extends JPanel{
     private void userPanel(){
         String tolerance = Short.toString(user.getTolerance()); 
         String points = String.valueOf(user.getUserPoints());
-        userIdLabel.setBounds(600, 20, 100, 25);
-        userToleranceLabel.setBounds(600, 50, 100, 25);
-        userIDMEXLabel.setBounds(600, 80, 100, 25);
-        userPoints.setBounds(600, 110, 100, 25);
+        userIdLabel.setBounds(600, 270, 100, 25);
+        userToleranceLabel.setBounds(600, 300, 100, 25);
+        userIDMEXLabel.setBounds(600, 330, 100, 25);
+        userPoints.setBounds(600, 360, 100, 25);
         userIdLabel.setText("ID: "+user.getStudentId());
         userToleranceLabel.setText("Tolerance: "+tolerance);
         userIDMEXLabel.setText("IDMEX: "+user.getIDMEX());
@@ -146,6 +151,7 @@ public class GUI extends JPanel{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage(map, 0, 0, this);
+        g.drawImage(logo, 565, 0, 250, 250, this);
         //paintNodes(g);
         //paintLinks(g);
         paintShortestPath(g);

@@ -1,2 +1,0 @@
-Driver|A001|pass123|MEX123|21|2|0|true
-Passenger|A002|pass456|MEX456|19|3|0|false

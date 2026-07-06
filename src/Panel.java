@@ -8,6 +8,7 @@ public class Panel{
         frame.pack();
 
         frame.setSize(800,700);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 }

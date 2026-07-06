@@ -53,7 +53,7 @@ public class LoginPage extends JPanel implements ActionListener{
 
 
         try{
-            logo = ImageIO.read(new File("logoUniRide.jpeg"));
+            logo = ImageIO.read(new File("icon2.jpeg"));
         }
         catch(IOException ex){
             System.out.println("Couldn't read the image");
@@ -65,6 +65,7 @@ public class LoginPage extends JPanel implements ActionListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,700);
         frame.setLayout(null);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
@@ -126,6 +127,6 @@ public class LoginPage extends JPanel implements ActionListener{
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.drawImage(logo, 0, 0, this);
+            g.drawImage(logo, 300, 50,200,200, this);
     }
 }
