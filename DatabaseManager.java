@@ -9,16 +9,27 @@ import java.util.ArrayList;
 import java.nio.file.FileSystems;
 import java.time.*;
 
+/**
+ * Clase encargada de la serialización y deserialización de la clase User y 
+ * cada uno de sus atributos según su subclase.
+ * * @author HodeCodeDepartment
+ */
 public class DatabaseManager {
+    /** Ruta del archivo de texto utilizado como base de datos. */
     private final Path path = Paths.get("usuarios.txt");
+    /** Lista interna para almacenar los pasajeros recuperados. */
     private ArrayList<Passenger> passengers = new ArrayList<>();
+    /**
+     * Guarda la lista de usuarios en el archivo de texto, separando los 
+     * atributos de cada subclase separados por '|'.
+     */
     public void saveUsers(ArrayList<User> users) {
         try(BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING)) {
             for(User u : users) {
                 Node source = u.getSource();
                 Node destination = u.getDestination();
                 Schedule schedule = u.getSchedule();
-                writer.write(u.getClass().getSimpleName() + "|" + u.getStudentId() + "|" + u.getPassword() + "|" + u.getIDMEX() + "|" + u.getAge() + "|" + u.getTolerance() + "|" + u.getUserPoints() + "|" + (u instanceof Driver ? ((Driver) u).isLicenseValid() : "false") + "|" + source.getX() + "|" + source.getY() + "|" + destination.getX() + "|" + destination.getY() + "|" + schedule.getArrival().toString() + "|" + schedule.getDeparture().toString() + "|" + (u instanceof Driver ? ((Driver) u).getDesviation() : "0")); // + u.getSource() + u.getDestination()
+                writer.write(u.getClass().getSimpleName() + "|" + u.getStudentId() + "|" + u.getPassword() + "|" + u.getIDMEX() + "|" + u.getAge() + "|" + u.getTolerance() + "|" + u.getUserPoints() + "|" + (u instanceof Driver ? ((Driver) u).isLicenseValid() : "false") + "|" + source.getX() + "|" + source.getY() + "|" + destination.getX() + "|" + destination.getY() + "|" + schedule.getArrival().toString() + "|" + schedule.getDeparture().toString() + "|" + (u instanceof Driver ? ((Driver) u).getDesviation() : "0"));
                 writer.newLine();
             }
         }
@@ -26,8 +37,14 @@ public class DatabaseManager {
            System.out.println(ex.getMessage()); 
         }
     }
+
+    /**
+     * Lee el archivo de base de datos e instancia los objetos correspondientes 
+     * ({@code Driver} o {@code Passenger}) con su información.
+     * * @return La lista de usuarios recuperados de la base de datos.
+     */
     public ArrayList<User> loadUsers() {
-        ArrayList<User> loadedUsers = new ArrayList<>(); //Lista temporal
+        ArrayList<User> loadedUsers = new ArrayList<>();
         if (!Files.exists(path)) {
             System.out.println("The file does not exist. Starting with an empty database...");
             return loadedUsers; 
@@ -90,6 +107,10 @@ public class DatabaseManager {
         return loadedUsers;
     }
 
+    /**
+     * Obtiene la lista de pasajeros que han sido cargados en memoria.
+     * * @return Lista de objetos {@code Passenger}.
+     */
     public ArrayList<Passenger> getPassengers(){
         return passengers;
     }

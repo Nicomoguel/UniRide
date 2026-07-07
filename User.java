@@ -1,3 +1,8 @@
+/**
+ * Clase abstracta que define la estructura y comportamiento común 
+ * de los usuarios del sistema.
+ * * @author HodeCodeDepartment
+ */
 public abstract class User {
     private String studentId;
     private String password;
@@ -9,6 +14,7 @@ public abstract class User {
     protected Node destination;
     protected Schedule schedule;
 
+    /** Inicializa un nuevo usuario con la información básica. */
     public User(String studentId, String password, String IDMEX, short age, short tolerance, Node source, Node destination, Schedule schedule) { // Node source, Node destination
         this.studentId = studentId;
         this.password = password;
@@ -73,15 +79,18 @@ public abstract class User {
         this.userPoints = points;
     }
 
+    /** Valida las credenciales del usuario. */
     public boolean login(String studentId, String password) {
         return this.studentId.equals(studentId) && this.password.equals(password);
     }
 
+    /** Incrementa los puntos de confiabilidad del usuario y retorna el total actualizado. */
     public int addReliabilityPoints(int points) {
         this.userPoints += points;
         return userPoints;
     }
-
+    /** Indica si el usuario ha completado su proceso de verificación. */
     public abstract boolean isUserVerified();
+    /** Retorna información sobre el tipo de usuario. */
     public abstract boolean whichUser();
 }

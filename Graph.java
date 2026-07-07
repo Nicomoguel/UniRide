@@ -23,6 +23,4 @@ public class Graph{
     public LinkedList<Node> getVertices(){
         return vertices;
     }
-
-
 }
