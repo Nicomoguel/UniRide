@@ -1,6 +1,5 @@
 import java.util.*;
 public class Dijkstra{
-    //Dijkstra algorithm
     public static Graph shortestPath(Graph graph, Node source){
         source.setDistance(0);
         Set<Node> settled = new HashSet<Node>();

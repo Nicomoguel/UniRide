@@ -1,13 +1,22 @@
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Evalúa y gestiona la compatibilidad de horarios y rutas entre conductores y pasajeros.
+ * * @author HodeCodeDepartment
+ */
 public class MatchMaker {
     private double maxDesviationMeters;
 
+    /** Inicializa el asignador con una distancia de desviación máxima permitida por el usuario. */
     public MatchMaker(double maxDesviationMeters) {
         this.maxDesviationMeters = maxDesviationMeters;
     }
 
+    /**
+     * Evalúa la compatibilidad individual entre un {@link Driver} y un {@link Passenger}.
+     * * @return Un objeto {@code MatchResult} con el resultado obtenido.
+     */
     public MatchResult evaluateCompatibility(Driver driver, Passenger passenger) {
         Schedule ds = driver.getSchedule();
         Schedule ps = passenger.getSchedule();
@@ -24,6 +33,10 @@ public class MatchMaker {
         return new MatchResult(passenger, distance, (int) minutesDifference, MatchStatus.MATCH);
     }
 
+    /**
+     * Evalúa la compatibilidad de un {@link Driver} contra una lista completa de pasajeros.
+     * * @return Lista de resultados de coincidencia {@code MatchResult}.
+     */
     public List<MatchResult> evaluateAll(Driver driver, List<Passenger> passengers) {
         ArrayList<MatchResult> list = new ArrayList<>();
         for(Passenger p : passengers) {
