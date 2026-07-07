@@ -9,10 +9,10 @@ public class Driver extends User {
     private List<Node> route = new LinkedList<>();
     /**
      * Constructor de Driver, llama al constructor de la superclase que es {@link User} y pasa todos los datos necesarios y los atributos exclusivos de Driver los asigna
-     * @param studentID Matrícula
+     * @param studentId Matrícula
      * @param password Constraseña
      * @param IDMEX Código de identificación
-     * @param destivation Cantidad en metros que está dispuesto a desviarse para dar raid
+     * @param desviation Cantidad en metros que está dispuesto a desviarse para dar raid
      * @param age Edad
      * @param tolerance Cantidad en tiempo que el Driver esta dispuesto a esperar
      * @param license Valor que indica si el Driver tiene licencia o no
@@ -27,12 +27,14 @@ public class Driver extends User {
     }
     /**
      * Método público que determina si el usuario tiene licencia o no
+     * @return {@code true} si el Driver tiene licencia válida
      */
     public boolean isLicenseValid() {
         return license != false;
     }
     /**
      * Setter que permite decidir si el usuario tiene licencia o no
+     * @param license Valor que indica si el Driver tiene licencia
      */
     public void setLicense(boolean license) {
         this.license = license;
@@ -55,6 +57,7 @@ public class Driver extends User {
 
     /**
      * Setter de la ruta del driver
+     * @param route La ruta de nodos que seguirá el Driver
      */
     public void setRoute(List<Node> route){
         this.route = route;
@@ -62,6 +65,7 @@ public class Driver extends User {
 
     /**
      * Método sobre escrito de User que nos dice si el usuario esta verificado o no, con IDMEX y la licencia
+     * @return {@code true} si el Driver tiene licencia válida e IDMEX registrado
      */
     @Override
     public boolean isUserVerified() {
@@ -69,6 +73,7 @@ public class Driver extends User {
     }
     /**
      * Método que nos ayuda a diferenciar si el User es un Driver o Passenger
+     * @return {@code false} por tratarse de un Driver
      */
     @Override
     public boolean whichUser(){

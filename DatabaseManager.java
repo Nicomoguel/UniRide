@@ -12,7 +12,7 @@ import java.time.*;
 /**
  * Clase encargada de la serialización y deserialización de la clase User y 
  * cada uno de sus atributos según su subclase.
- * * @author HodeCodeDepartment
+ * @author HoodCodeDepartment
  */
 public class DatabaseManager {
     /** Ruta del archivo de texto utilizado como base de datos. */
@@ -20,8 +20,9 @@ public class DatabaseManager {
     /** Lista interna para almacenar los pasajeros recuperados. */
     private ArrayList<Passenger> passengers = new ArrayList<>();
     /**
-     * Guarda la lista de usuarios en el archivo de texto, separando los 
+     * Guarda la lista de usuarios en el archivo de texto, separando los
      * atributos de cada subclase separados por '|'.
+     * @param users Lista de usuarios a guardar en la base de datos
      */
     public void saveUsers(ArrayList<User> users) {
         try(BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING)) {
@@ -41,7 +42,7 @@ public class DatabaseManager {
     /**
      * Lee el archivo de base de datos e instancia los objetos correspondientes 
      * ({@code Driver} o {@code Passenger}) con su información.
-     * * @return La lista de usuarios recuperados de la base de datos.
+     * @return La lista de usuarios recuperados de la base de datos.
      */
     public ArrayList<User> loadUsers() {
         ArrayList<User> loadedUsers = new ArrayList<>();
@@ -109,7 +110,7 @@ public class DatabaseManager {
 
     /**
      * Obtiene la lista de pasajeros que han sido cargados en memoria.
-     * * @return Lista de objetos {@code Passenger}.
+     * @return Lista de objetos {@code Passenger}.
      */
     public ArrayList<Passenger> getPassengers(){
         return passengers;

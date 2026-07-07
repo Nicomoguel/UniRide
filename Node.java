@@ -15,7 +15,7 @@ public class Node{
     /**
      * Método público que sirve para agregar adyacencias entre nuestro nodo y otro, este método lo hace de manera bidireccional
      * ya que hace la adyacencia normal y luego llama a si mismo para hacer la vuelta.
-     * @param souce El mismo nodo origen
+     * @param source El mismo nodo origen
      * @param destination El nodo destino
      * @param distance El peso de la arista
      */
@@ -66,6 +66,7 @@ public class Node{
         this.coordY = coordY;
     }
     /** Setter del nombre
+     * @param name Nombre del nodo
      */
     public void setName(String name){
         this.name = name; 
@@ -115,20 +116,23 @@ public class Node{
         return shortestPath;
     }
 
-    /** 
+    /**
      * Getter coordenada X
+     * @return La coordenada X del nodo
      */
     public int getX(){
         return coordX;
     }
     /**
      * Getter coordenada Y
+     * @return La coordenada Y del nodo
      */
     public int getY(){
         return coordY;
     }
     /**
      * Getter del radio del nodo
+     * @return El radio del nodo
      */
     public int getRadius(){
         return radius;

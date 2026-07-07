@@ -1,7 +1,7 @@
 /**
- * Clase abstracta que define la estructura y comportamiento común 
+ * Clase abstracta que define la estructura y comportamiento común
  * de los usuarios del sistema.
- * * @author HodeCodeDepartment
+ * @author HoodCodeDepartment
  */
 public abstract class User {
     private String studentId;
@@ -14,7 +14,17 @@ public abstract class User {
     protected Node destination;
     protected Schedule schedule;
 
-    /** Inicializa un nuevo usuario con la información básica. */
+    /**
+     * Inicializa un nuevo usuario con la información básica.
+     * @param studentId Matrícula del usuario
+     * @param password Contraseña del usuario
+     * @param IDMEX Código de identificación
+     * @param age Edad del usuario
+     * @param tolerance Cantidad de tiempo (min) que el usuario está dispuesto a esperar
+     * @param source Ubicación de origen
+     * @param destination Ubicación de destino
+     * @param schedule Horario de salida y llegada
+     */
     public User(String studentId, String password, String IDMEX, short age, short tolerance, Node source, Node destination, Schedule schedule) { // Node source, Node destination
         this.studentId = studentId;
         this.password = password;
@@ -79,18 +89,33 @@ public abstract class User {
         this.userPoints = points;
     }
 
-    /** Valida las credenciales del usuario. */
+    /**
+     * Valida las credenciales del usuario.
+     * @param studentId Matrícula a comparar
+     * @param password Contraseña a comparar
+     * @return {@code true} si la matrícula y la contraseña coinciden
+     */
     public boolean login(String studentId, String password) {
         return this.studentId.equals(studentId) && this.password.equals(password);
     }
 
-    /** Incrementa los puntos de confiabilidad del usuario y retorna el total actualizado. */
+    /**
+     * Incrementa los puntos de confiabilidad del usuario y retorna el total actualizado.
+     * @param points Puntos a sumar
+     * @return El total de puntos después de la suma
+     */
     public int addReliabilityPoints(int points) {
         this.userPoints += points;
         return userPoints;
     }
-    /** Indica si el usuario ha completado su proceso de verificación. */
+    /**
+     * Indica si el usuario ha completado su proceso de verificación.
+     * @return {@code true} si el usuario está verificado
+     */
     public abstract boolean isUserVerified();
-    /** Retorna información sobre el tipo de usuario. */
+    /**
+     * Retorna información sobre el tipo de usuario.
+     * @return valor booleano que identifica el tipo de usuario
+     */
     public abstract boolean whichUser();
 }

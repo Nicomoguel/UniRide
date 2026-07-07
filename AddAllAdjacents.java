@@ -1,6 +1,16 @@
 import java.util.*;
 
+/**
+ * Clase utilitaria que agrega las adyacencias base entre todos los nodos del grafo,
+ * enlazando cada nodo con el siguiente para formar la estructura inicial del mapa.
+ * @author HoodCodeDepartment
+ */
 public class AddAllAdjacents{
+    /**
+     * Recorre los vértices del grafo y crea las adyacencias entre nodos consecutivos.
+     * @param graph Grafo sobre el que se agregarán las adyacencias
+     * @return El grafo con las adyacencias base agregadas
+     */
     public static Graph add(Graph graph){
         List<Node> vertices = graph.getVertices();
         Node[] nodes = vertices.toArray(new Node[0]);
