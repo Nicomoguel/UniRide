@@ -14,7 +14,7 @@ import java.time.*;
  * cada uno de sus atributos según su subclase.
  * @author HoodCodeDepartment
  */
-public class DatabaseManager {
+public class DatabaseManager implements UserRepository {
     /** Ruta del archivo de texto utilizado como base de datos. */
     private final Path path = Paths.get("usuarios.txt");
     /** Lista interna para almacenar los pasajeros recuperados. */
