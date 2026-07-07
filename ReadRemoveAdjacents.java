@@ -4,9 +4,17 @@ import java.nio.file.*;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.lang.Exception.*;
-
+/**
+ * Clase que lee un archivo y elimina todas las adyacencias que no necesitamos en nuestro grafo, debido a que en un inicio se generaliza con las adyacencias y despues solo se eliminan aquellas que no nos sirven
+ */
 public class ReadRemoveAdjacents{
-    public static Graph removeAdjacents(Graph graph, String name){
+
+    /**
+     * Método estatico que lee el archivo donde se encuentran los índices de los nodos de los cuales queremos eliminar su adyacencia y los elimina iterando por todo el archivo
+     * @param graph El grafo sobre el cual trabajaremos
+     * @param name El nombre del archivo que queremos leer
+     */
+    public static void removeAdjacents(Graph graph, String name){
         try{
             Path path = FileSystems.getDefault().getPath(name);
             BufferedReader br = Files.newBufferedReader(path);
@@ -30,7 +38,6 @@ public class ReadRemoveAdjacents{
         catch(IOException ex){
             System.out.println(ex.getMessage());
         }
-        return null;
     }
 
 }

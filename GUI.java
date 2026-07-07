@@ -16,6 +16,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+/**
+ * Clase encargada de mostrar la aplicación principal, inicializar el grafo, nodos, realizar los algoritmos
+ * y mostrar toda la información y funcionalidades relevantes
+ * @author HoodCodeDepartment
+ */
 public class GUI extends JPanel implements ActionListener{
 
     private BufferedImage map;
@@ -37,6 +42,15 @@ public class GUI extends JPanel implements ActionListener{
     // Resultados del matchmaking (solo cuando el usuario es Driver)
     private List<MatchResult> matchResults = new ArrayList<>();
 
+
+    /**
+     * Constructor de GUI, muestra la información del usuatio, asigna atributos privados, luego de eso
+     * llama a metodos de otras clases para agregar los nodos al grafo junto con sus adyacencias, inicializa el matchmaking solo si el usuario 
+     * que inició sesión es Driver y lee las imagenes necesarias
+     * @param user Usuario con el cual iniciamos sesion
+     * @param passengers Lista de posibles pasajeros mandada por el database manager
+     * @param frame nuestro Frame principal sobre el cual se implementa todo el front end
+     */
     public GUI(User user, ArrayList<Passenger> passengers,JFrame frame){
         this.user = user;
         this.frame = frame;
@@ -56,7 +70,7 @@ public class GUI extends JPanel implements ActionListener{
             resultsTable();
         }
         try{
-            map = ImageIO.read(new File("Map2.jpeg"));
+            map = ImageIO.read(new File("mapa3.png"));
         }
         catch(IOException ex){
             System.out.println("Couldn't read the image");
@@ -71,7 +85,10 @@ public class GUI extends JPanel implements ActionListener{
 
     }
 
-    // Panel lateral derecho: logo (arriba, dibujado en paintComponent) + datos del usuario debajo
+    /**
+     * Método privado que asigna los valores necesarios a cada JPanel para mostrar los datos del usuario, como las coordenadas del panel
+     * tamaño, fuente, y asigna informacion llamando a los getters del usuario, mostrando informacion distinta dependiendo de si es Driver o Passenger
+     */
     private void userPanel(){
         int x = 585;
         JLabel heading = new JLabel("Datos del usuario");
@@ -102,11 +119,11 @@ public class GUI extends JPanel implements ActionListener{
             this.add(lbl);
             y += dy;
         }
-        // El botón de cerrar sesión queda debajo de la info del usuario
         logoutButton.setBounds(x, y + 10, 150, 34);
     }
-
-    // Botón rojo para cerrar sesión: cierra esta ventana y abre un LoginPage nuevo
+    /**
+     * Método privado que asigna todos los atributos al boton de cerrar sesión
+     */
     private void logoutPanel(){
         logoutButton.setBackground(Color.RED);
         logoutButton.setForeground(Color.WHITE);
@@ -116,16 +133,20 @@ public class GUI extends JPanel implements ActionListener{
         logoutButton.addActionListener(this);
         this.add(logoutButton);
     }
-
-    // Igual que en LoginPage: aquí se maneja el clic del botón "Cerrar sesión"
+    /**
+     * Método que valida si la accion del mouse fue dentro de el botón de cerrar sesión para volver al inicio de sesión
+     */
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == logoutButton){
             frame.dispose();
             new LoginPage();
         }
     }
-
-    // Calcula la ruta más corta source->destination y se la asigna al Driver
+        
+    /**
+     * Método que calcula la ruta mas corta entre el nodo de inicio del conductor y su destino utilizando el algoritmo de Dijkstra
+     * Esta ruta solo la asigna si el usuario que inicio sesión es un Driver, ya que en base a esta ruta se podra determinar si los Passengers hacen match o no
+     */
     private void computeRoute(){
         Node source = this.user.getSource();
         Node destination = this.user.getDestination();
@@ -148,7 +169,9 @@ public class GUI extends JPanel implements ActionListener{
         }
     }
 
-    // Evalúa a todos los pasajeros contra el conductor
+    /**
+     * Método que inicializa el matchmaking y llama al método que realiza el matchmaking para todos los usuarios de la aplicación
+     */
     private void runMatchmaking(){
         Driver driver = (Driver) user;
         matchmaker = new MatchMaker(driver.getDesviation());
@@ -156,6 +179,9 @@ public class GUI extends JPanel implements ActionListener{
     }
 
     // Construye la tabla de resultados con etiquetas y setBounds (igual que la info del usuario)
+    /**
+     *  Inicializa la tabla con la informacion de los Passengers, después de hacer el matchmaking para mostrar la información y si hubo match o no
+     */
     private void resultsTable(){
         Font headFont = new Font("SansSerif", Font.BOLD, 14);
         Font rowFont = new Font("SansSerif", Font.PLAIN, 14);
@@ -199,7 +225,8 @@ public class GUI extends JPanel implements ActionListener{
         addLabel("Verde = Pasajero    Azul = Ruta del conductor    MATCH = compatible    RECHAZADO = no compatible", xId, y + dy + 6, 760, rowFont);
     }
 
-    // Crea una etiqueta y la coloca en (x, y), igual que en userPanel
+    /** Método que crea una etiqueta y la coloca en (x, y), igual que en userPanel
+     */
     private void addLabel(String text, int x, int y, int w, Font font){
         JLabel lbl = new JLabel(text);
         lbl.setFont(font);
@@ -207,6 +234,11 @@ public class GUI extends JPanel implements ActionListener{
         this.add(lbl);
     }
 
+    /**
+     * Método que pinta en el mapa el nodo en donde se encuentra cada Passenger
+     * @param g El componente gráfico 
+     * @param passengers El conjunto de pasajeros a dibujar
+     */
     private void paintPassengers(Graphics g, ArrayList<Passenger> passengers){
         Color myColor = new Color(37, 161, 74);
         for(Passenger passenger : passengers){
@@ -218,7 +250,13 @@ public class GUI extends JPanel implements ActionListener{
         g.setColor(Color.BLACK);
     }
 
-    // Dibuja un texto pequeño centrado debajo de un nodo
+    /** Método que dibuja una cadena de caracteres debajo de cada nodo mostrado
+     *  Utiliza java.awt.FontMetrics para conseguir el alto y ancho de la cadena que vamos a dibujar
+     *  @param g El componente gráfico
+     *  @param node El nodo de referencia
+     *  @param text La cadena de caracteres que se quiere mostrar
+     *
+     */
     private void drawNodeLabel(Graphics g, Node node, String text){
         g.setFont(new Font("SansSerif", Font.PLAIN, 11));
         java.awt.FontMetrics fm = g.getFontMetrics();
@@ -228,24 +266,45 @@ public class GUI extends JPanel implements ActionListener{
         g.drawString(text, tx, ty);
     }
 
-    private void paintLinks(Graphics g){
-        List<Node> vertices = graph.getVertices();
-        for(Node node : vertices){
-            Map<Node, Integer> adjacents = node.getAdjacentNodes();
-            for(Map.Entry<Node, Integer> entry : adjacents.entrySet()){
-                Node adjacent = entry.getKey();
-                g.drawLine(node.getX(), node.getY(), adjacent.getX(), adjacent.getY());
-            }
+
+
+
+
+    /**
+     * Método que dibuja las líneas de la tabla de resultados usando solo g.drawLine.
+     * Dibuja una línea horizontal por cada fila (encabezado + pasajeros) y una
+     * línea vertical en el límite de cada columna.
+     * @param g El componente gráfico
+     */
+    private void drawTableLines(Graphics g){
+        int left = 20, right = 740;   // extremos horizontales de la tabla
+        int top = 476, dy = 28;       // borde superior y alto de cada fila
+        int rows = matchResults.size();          // filas de pasajeros
+        int bottom = top + (rows + 1) * dy;      
+        g.setColor(Color.BLACK);
+
+        // Líneas horizontales
+        for(int y = top; y <= bottom; y += dy){
+            g.drawLine(left, y, right, y);
         }
 
+        // Líneas verticales
+        int[] cols = {20, 170, 320, 460, 740};
+        for(int x : cols){
+            g.drawLine(x, top, x, bottom);
+        }
     }
-
 
     public Dimension getPreferredSize() {
         return new Dimension(800,430);
     }
 
-    // Dibuja la ruta del conductor ya calculada (azul), y sus extremos
+    /** Método que dibuja la ruta del conductor ya calculada (azul), y sus extremos
+     *  Itera sobre la ruta mas corta de nodos y dibuja un enlace entre ellos
+     *  Utiliza un color personalizado con parametros enteros (RGB)
+     *  Rellena los nodos de origen y destino
+     *  @param g El componente gráfico
+     */
     private void paintShortestPath(Graphics g){
         if(driverRoute == null || driverRoute.isEmpty()) return;
         Color routeColor = new Color(66, 133, 244);
@@ -268,19 +327,27 @@ public class GUI extends JPanel implements ActionListener{
         g.setColor(Color.BLACK);
     }
 
-
+    /**
+     *  Override al método paintComponent que llama a todos los métodos que requieren el componente gráfico
+     *  @param g El componente gráfico
+     */
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage(map, 0, 0, this);
         g.drawImage(logo, 585, 5, 130, 130, this);
-        //paintLinks(g);
         paintShortestPath(g);
         paintPassengers(g, passengers);
+        if(user instanceof Driver){
+            drawTableLines(g);
+        }
+        g.setColor(Color.WHITE);
         // Para el conductor: tapa la parte baja del mapa para que la tabla tenga fondo limpio
+        /*
         if(user instanceof Driver){
             g.setColor(Color.WHITE);
             g.fillRect(0, 455, getWidth(), getHeight() - 455);
         }
+        */
     }
 }

@@ -3,9 +3,17 @@ import java.nio.file.*;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.lang.Exception.*;
-
+/**
+ * Clase que lee un archivo donde se encuentran las coordenadas de cada nodo que queremos agregar y los implementa, aproximadamente 140 nodos.
+ * @author HoodCodeDepartment
+ */
 public class ReadNodes{
-    public static Graph readDoc(Graph graph, String name){
+    /**
+     * Método estático que lee un archivo con coordenadas de todos los nodos, crea un nodo con las coordenadas encontradas y su número  y agrega ese nodo al grafo.
+     * @param graph Grafo sobre el cual agregaremos los nodos
+     * @param name El nombre del archivo que queremos leer
+     */
+    public static void readDoc(Graph graph, String name){
         try{
             Path path = FileSystems.getDefault().getPath(name);
             BufferedReader br = Files.newBufferedReader(path);
@@ -31,10 +39,5 @@ public class ReadNodes{
         catch(IOException ex){
             System.out.println(ex.getMessage());
         }
-        return null;
-    }
-
-    public static void main(String[] s){
-        readDoc(null, "coordenadas.txt");
     }
 }
