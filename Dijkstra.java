@@ -1,6 +1,17 @@
 import java.util.*;
+/**
+ * Clase que realiza el algoritmo de Dijkstra, un algoritmo diseñado para calcular la ruta mas corta entre un nodo origen y 
+ * todos los demas nodos de un grafo ponderado
+ * @author HoodCodeDepartment
+ */
 public class Dijkstra{
-    //Dijkstra algorithm
+    /**
+     * Método estático que calcula la ruta mas corta entre el nodo origen y todos los demás nodos del grafo
+     * (Algoritmo de Dijkstra)
+     * @param graph Grafo sobre el que se aplicará el algoritmo
+     * @param source Nodo de origen
+     * @return Devuelve el grafo modificado, cada nodo ahora tiene la ruta mas corta entre el origen y si mismo, una lista de nodos
+     */
     public static Graph shortestPath(Graph graph, Node source){
         source.setDistance(0);
         Set<Node> settled = new HashSet<Node>();
@@ -22,7 +33,12 @@ public class Dijkstra{
         return graph;
     }
     
-
+    /**
+     * Método estatico que devuelve el nodo aun no marcado con la menor distancia
+     * Itera sobre todos los nodos no marcados y consigue el nodo con la distancia menor
+     * @param unsettled El conjunto de nodos aun no marcados
+     * @return El nodo con la distancia mas corta
+     */
     private static Node getLowestDistance(Set<Node> unsettled){
         Node shortest = null;
         int lowestDistance = Integer.MAX_VALUE;
@@ -37,6 +53,14 @@ public class Dijkstra{
 
     }
 
+    /**
+     * Método estatico que determina si la ruta mas corta al nodo de evaluacion es la actual o la que tenía anteriormente
+     * Si la ruta actual tiene un peso menor, se reemplaza con la que ya tenía el nodo
+     * @param evaluationNode Nuestro nodo de evaluacion
+     * @param edgeWeight Peso de la arista (conexion)
+     * @param sourceNode Nodo de origen
+     */
+
     private static void calculateMinimumDistance(Node evaluationNode, int edgeWeight, Node sourceNode){
         int sourceDistance = sourceNode.getDistance();
         if(sourceDistance + edgeWeight < evaluationNode.getDistance()){
@@ -46,55 +70,4 @@ public class Dijkstra{
             evaluationNode.setShortestPath(shortestPath);
         }
     }
-
-    public static void main(String[]s){
-
-
-
-        Node nodeA = new Node("A",10,20);
-        Node nodeB = new Node("B",30,20);
-        Node nodeC = new Node("C",30,50);
-        Node nodeD = new Node("D",30,40);
-        Node nodeE = new Node("E",60,70);
-        Node nodeF = new Node("F",80,70);
-        
-
-        nodeA.addDestination(nodeB, 10);
-        nodeA.addDestination(nodeC, 15);
-        nodeB.addDestination(nodeD, 12);
-        nodeB.addDestination(nodeF, 15);
-        nodeC.addDestination(nodeE, 10);
-        nodeD.addDestination(nodeE, 2);
-        nodeD.addDestination(nodeF, 1);
-        nodeF.addDestination(nodeE, 5);
-        Graph graph = new Graph();
-        graph.addNode(nodeA);
-        graph.addNode(nodeB);
-        graph.addNode(nodeC);
-        graph.addNode(nodeD);
-        graph.addNode(nodeE);
-        graph.addNode(nodeF);
-        graph = Dijkstra.shortestPath(graph, nodeA);
-
-
-        //List<Node> shortest = nodeE.getShortestPath();
-        //for(Node node : shortest){
-        //    System.out.print(node.getName() + "->");
-        //}
-        //    System.out.println();
-
-        List<Node> vertices = graph.getVertices();
-        for(Node vertice : vertices){
-            List<Node> shortest = vertice.getShortestPath();
-            System.out.print(vertice.getName() + ": ");
-            for(Node node : shortest){
-                System.out.print(node.getName() + "->");
-                
-            }
-            System.out.println();
-        }
-
-
-    }
-
 }
