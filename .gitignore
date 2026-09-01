@@ -1,0 +1,8 @@
+# Salida de compilacion de Maven
+target/
+
+# Clases compiladas
+*.class
+
+# Archivos del sistema operativo
+.DS_Store

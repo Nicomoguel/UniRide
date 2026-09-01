@@ -1,0 +1,51 @@
+package com.uniride;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.lang.Exception.*;
+/**
+ * Clase que lee un archivo donde se encuentran las coordenadas de cada nodo que queremos agregar y los implementa, aproximadamente 140 nodos.
+ * @author HoodCodeDepartment
+ */
+public class ReadNodes{
+    /**
+     * Método estático que lee un archivo con coordenadas de todos los nodos, crea un nodo con las coordenadas encontradas y su número  y agrega ese nodo al grafo.
+     * @param graph Grafo sobre el cual agregaremos los nodos
+     * @param name El nombre del archivo que queremos leer
+     */
+    public static void readDoc(Graph graph, String name){
+        try{
+            InputStream in = ReadNodes.class.getResourceAsStream("/" + name);
+            if(in == null){
+                System.out.println("Archivo de coordenadas no encontrado");
+                return;
+            }
+            BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            String linea;
+            int i = 0;
+            while((linea = br.readLine()) != null){
+                i++;
+                int split = linea.indexOf(" ");
+                String s1 = linea.substring(0, split);
+                String s2 = linea.substring(split + 1, linea.length());
+                int x = Integer.parseInt(s1);
+                int y = Integer.parseInt(s2);
+                //System.out.println(s1 + " " + s2);
+                String nameNode = String.valueOf(i);
+                Node newNode = new Node(nameNode, x, y);
+                graph.addNode(newNode);
+            }
+            br.close();
+        }
+        catch(FileNotFoundException ex){
+            System.out.println("Archivo de coordenadas no encontrado");
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+}

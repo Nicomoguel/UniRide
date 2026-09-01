@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.uniride</groupId>
+  <artifactId>uniride</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <name>UniRide</name>
+  <description>Aplicacion de carpooling universitario con emparejamiento de rutas sobre un grafo (Dijkstra).</description>
+
+  <properties>
+    <!-- El codigo fuente esta en UTF-8 (Javadoc en espanol con acentos).
+         Fijar la codificacion es obligatorio: sin esto, una compilacion en una
+         maquina con otra codificacion por defecto corromperia los acentos. -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.release>21</maven.compiler.release>
+    <mainClass>com.uniride.Main</mainClass>
+  </properties>
+
+  <!-- Sin dependencias externas: la aplicacion solo usa el JDK (Swing / ImageIO). -->
+
+  <build>
+    <finalName>uniride</finalName>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.1</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>${mainClass}</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <!-- `mvn exec:java` arranca la aplicacion desde la raiz del proyecto.
+           El directorio de trabajo importa: DatabaseManager reescribe
+           usuarios.txt con una ruta relativa, por lo que ese archivo vive en la
+           raiz y no puede empaquetarse dentro del jar. -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <mainClass>${mainClass}</mainClass>
+          <workingDirectory>${project.basedir}</workingDirectory>
+        </configuration>
+      </plugin>
+
+      <!-- `mvn javadoc:javadoc` regenera la documentacion en docs/ -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.6.3</version>
+        <configuration>
+          <reportOutputDirectory>${project.basedir}</reportOutputDirectory>
+          <destDir>docs</destDir>
+          <encoding>UTF-8</encoding>
+          <docencoding>UTF-8</docencoding>
+          <charset>UTF-8</charset>
+          <doclint>all,-missing</doclint>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>
