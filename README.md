@@ -107,12 +107,6 @@ mvn javadoc:javadoc
 - **Javadoc** — `docs/index.html` (in Spanish)
 - **Full project report** — [`HoodCodeDepartment-1.pdf`](HoodCodeDepartment-1.pdf), with the problem statement, UML diagram, methodology and results
 
-## Roadmap
-
-- Move persistence from a text file to a real database
-- Let users register from inside the application
-- Match against several drivers at once instead of one at a time
-
 ## Authors
 
 **Hood Code Department** — Nicolas Moguel Miranda, Gadiel Abdias Uicab Gutierrez
